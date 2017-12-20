@@ -1,0 +1,109 @@
+entity Roles{
+	id Long,
+    name String,
+    appCode String,
+    appFunction String,
+    createdOn Instant,  
+    updatedOn Instant 
+}
+
+entity Permissions{
+	id Long,
+    name String,
+    appCode String,
+    roleNo Long,
+    createdOn Instant,  
+    updatedOn Instant
+}
+
+entity UserGroups{
+	id Long,
+	name String,
+    description String,
+    flag String,
+    systemDefined Boolean,
+    basetype String,
+    appCode String,    
+    editData String,
+    createdBy Long,
+    updatedBy Long,    
+    createdOn Instant,  
+    updatedOn Instant,  
+    deletedOn Instant   
+}
+
+entity GroupPermissions{
+	permissionNo Long,
+    groupNo Long
+}
+
+entity UserTypes{
+	id Long,
+    name String,
+    appCode String
+}
+
+entity Users{
+	id Long,
+	firstName String,
+    middleName String,
+    surname String,
+    email String,
+    password String,
+    mobileNo String,
+    passport String,    
+    dateOfBirth String,  
+    nationality String,
+    enabled Boolean,
+    locked Boolean,
+    resetToken String,
+    resetReqDate Instant,    
+    reasoncode String,  
+    reasoncodeDescription String,
+    termsAndConditions Boolean,
+    emailVerified Boolean,
+    mobileVerified Boolean,
+    mobileToken String,
+    emailToken String,
+    fcmToken String,    
+    photoKey String,
+    photoUrl String,
+    emailToken String,    
+    userType Long,
+    groupNo Long,    
+    flag String,
+    editData String,
+    createdBy Long,
+    updatedBy Long,    
+    createdOn Instant,  
+    updatedOn Instant,  
+    deletedOn Instant     
+}
+
+relationship OneToOne {
+	Users{userTypeNo} to UserTypes
+}
+
+// defining multiple OneToMany relationships with comments
+relationship ManyToOne {
+	Users{groupNo} to UserGroups
+}
+
+relationship OneToMany {
+	UserGroups{id} to GroupPermissions{groupNo},
+    Permissions{id} to GroupPermissions{permissionNo}
+    Roles{id} to Permissions{roleNo}
+}
+
+
+
+// Set pagination options
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl 
+// Set an angular suffix
+//angularSuffix * with app
