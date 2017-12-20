@@ -1,0 +1,12 @@
+version: '2'
+services:
+    userservice-app:
+        image: userservice
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://userservice-mysql:3306/userservice?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+    userservice-mysql:
+        extends:
+            file: mysql.yml
+            service: userservice-mysql
